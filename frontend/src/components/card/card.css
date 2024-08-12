@@ -1,0 +1,76 @@
+.card {
+  cursor: pointer;
+  width: 100%;
+  background: transparent;
+  margin-bottom: 0.8em;
+  overflow: hidden;
+  height: auto;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.543);
+}
+
+.card__container {
+  position: relative;
+  padding: 0em;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgb(181, 186, 25);
+  overflow: hidden;
+}
+
+.card__container img {
+  height: 400px;
+  object-fit: fill;
+  user-select: none; /* Prevents text selection */
+  -webkit-user-drag: none; /* Prevents dragging in WebKit browsers (e.g., Chrome, Safari) */
+  -moz-user-select: none; /* Prevents text selection in Firefox */
+  -ms-user-select: none;
+}
+
+.card__container-details {
+  transition: height 0.3s ease;
+  position: absolute;
+  width: 100%;
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.302);
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  right: 0;
+  padding: 0.6em;
+  color: whitesmoke;
+}
+
+.card__container-details_title h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+
+.card__container-details_author {
+  margin-bottom: 0.7em;
+}
+
+.card__container-details_author small {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: beige;
+  font-style: italic;
+}
+
+.card__container-details_description p {
+  font-size: 01rem;
+  font-weight: 200;
+  text-align: left;
+  line-height: 1.2;
+  padding-bottom: 0.5em;
+}

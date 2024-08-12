@@ -1,0 +1,20 @@
+.feature {
+  width: 100%;
+  border-radius: 10px;
+  text-align: left;
+  padding: 1em;
+  box-shadow: 0 0 20px rgba(128, 128, 128, 0.423);
+  margin-bottom: 1em;
+}
+
+.feature__container-icon svg {
+  font-weight: bold;
+  margin-bottom: 0.6em;
+  color: #ffc300;
+}
+
+.feature__container-text_title h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5em;
+  font-weight: 300;
+}

@@ -1,0 +1,119 @@
+/* src/components/BookDetailPage.css */
+.book__details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.book__details-cover img {
+  width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.book__details-content {
+  width: 100%;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.book__details-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.book__details-author {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.book__details-summary {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 200;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.book__details-chapters h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.book__details-chapter {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.book__details-chapter_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  font-weight: 200;
+  font-size: 0.9rem;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.book__details-chapter_title:hover,
+.book__details-chapter.active .book__details-chapter_title {
+  color: #007bff;
+}
+
+.book__details-chapter_content {
+  padding: 1.5em;
+}
+
+.book__details-chapter_explain {
+  margin-bottom: 0.9em;
+}
+
+.book__details-chapter_content-points {
+  padding-left: 20px;
+  margin-top: 10px;
+  list-style: square;
+  font-size: 1rem;
+  color: #666;
+}
+
+.book__details-chapter_content-points h5 {
+  margin-bottom: 0.5em;
+  text-transform: capitalize;
+}
+
+.book__details-chapter_content-points li {
+  margin-bottom: 0.5em;
+}
+
+.book__details-chapter.active
+  .book__details-chapter.active
+  .book__details-chapter_title
+  span {
+  transform: rotate(180deg);
+}
+
+/* mobile view */
+@media (min-width: 768px) {
+  .book__details {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .book__details-cover {
+    margin-right: 40px;
+  }
+
+  .book__details-chapter_content {
+    text-align: left;
+  }
+}

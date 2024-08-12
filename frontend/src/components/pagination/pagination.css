@@ -1,0 +1,32 @@
+.pagination_container {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination__container-item-digits {
+  padding: 0 12px;
+  height: 32px;
+  text-align: center;
+  margin: auto 4px;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.01071em;
+  border-radius: 16px;
+  line-height: 1.43;
+  font-size: 1rem;
+  min-width: 32px;
+}
+
+.pagination__container-item-digits:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.selected {
+  background-color: var(--color-btn) !important;
+  color: whitesmoke !important;
+}

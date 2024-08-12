@@ -1,0 +1,22 @@
+.header__container {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 2em;
+}
+
+.header__container-title {
+  text-align: left;
+}
+
+.header__container-title h1 {
+  text-align: left;
+  text-transform: capitalize;
+  color: var(--color-text);
+  margin-bottom: 0.3em;
+}
+
+@media screen and (min-width: 760px) {
+  .header__container {
+    margin: 0 5em;
+  }
+}
