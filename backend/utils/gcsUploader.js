@@ -1,13 +1,9 @@
 const gcsBucket = require("../config/gcs");
 
 const gcsUploader = (fileBuffer, fileName) => {
-
-  
   const file = gcsBucket.file(fileName);
 
   const blobStream = file.createWriteStream();
-
-
 
   return new Promise((resolve, reject) => {
     blobStream.on("error", (err) => {

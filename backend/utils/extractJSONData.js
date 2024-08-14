@@ -1,4 +1,4 @@
-function extractJSONData(text) {
+async function extractJSONData(text) {
   const regex = /```json\s*([\s\S]*?)\s*```/g;
   let match;
   const jsonDataArray = [];
@@ -7,11 +7,11 @@ function extractJSONData(text) {
     try {
       const jsonData = JSON.parse(match[1]);
       jsonDataArray.push(jsonData);
+      return jsonDataArray;
     } catch (error) {
       console.error("Invalid JSON:", error);
     }
   }
-
-  return jsonDataArray;
 }
+
 module.exports = extractJSONData;

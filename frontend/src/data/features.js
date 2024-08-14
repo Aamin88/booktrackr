@@ -1,10 +1,4 @@
-import {
-  MdZoomOutMap,
-  MdFaceUnlock,
-  MdFilter1,
-  Md10Mp,
-  Md1kPlus,
-} from "react-icons/md";
+import { MdZoomOutMap, MdFilter1, Md10Mp } from "react-icons/md";
 
 const data = [
   {

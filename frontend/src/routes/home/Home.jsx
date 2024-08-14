@@ -1,33 +1,11 @@
-import "./index.css";
-import { data } from "../../../public/features.js";
+import "./home.css";
+import { data } from "../../data/features";
 
-import instance from "../../config/axios";
-
-import { useLoaderData, useNavigate, Form, Link } from "react-router-dom";
+import { useLoaderData, useNavigate, Link } from "react-router-dom";
 import { Card, Spinner, Feature } from "../../components";
 
 // imgs
 import cover from "../../assets/header-cover.png";
-
-export async function action({ request, params }) {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-  console.log(data, formData.get("fName"));
-  return null;
-}
-
-export async function loader() {
-  const res = await instance.get("/");
-  const data = res.data;
-
-  // recommendations => selects three books randomly
-  const getBookRecommendation = (books, numberOfRecommendations) => {
-    const shuffled = books.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, numberOfRecommendations);
-  };
-  const books = getBookRecommendation(data?.books, 4);
-  return { books };
-}
 
 function Home() {
   const { books } = useLoaderData();

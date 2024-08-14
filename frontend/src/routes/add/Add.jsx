@@ -1,64 +1,8 @@
-import { toast } from "react-toastify";
-import instance from "../../config/axios";
 import "./add.css";
+
 import { BsFillInfoSquareFill } from "react-icons/bs";
-
-import { Form, redirect, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
-
-export async function loader() {
-  try {
-    const res = await instance.get("");
-    return {
-      data: res?.data,
-    };
-  } catch (error) {
-    throw Error(error);
-  }
-}
-
-export async function action({ request, params }) {
-  const formData = await request.formData();
-  const bookData = Object.fromEntries(formData);
-
-  const image = formData.get("coverImage");
-
-  console.log(image);
-
-  if (!bookData.title || !bookData.author) {
-    return toast.error("Fill title and author");
-  }
-
-  const testData = new FormData();
-
-  testData.append("title", bookData?.title);
-  testData.append("author", bookData?.author);
-  testData.append("genre", bookData?.genre);
-  testData.append("desc", bookData?.desc);
-  testData.append("imgfile", image);
-  testData.append("dateOfPublication", bookData?.dateOfPublication);
-
-  // const bookInfo = {
-  //   title: bookData?.title,
-  //   author: bookData?.author,
-  //   desc: bookData?.description,
-  //   coverPath: image,
-  //   dateOfPublication: bookData?.dateOfPublication,
-  // };
-
-  try {
-    const res = await instance.post("/", testData);
-
-    if (res.data) {
-      toast.info("book added");
-    }
-
-    return redirect(`/${res.data.book._id}`);
-  } catch (error) {
-    console.log(error);
-    return toast.error(error.message);
-  }
-}
 
 function Add() {
   // books in db

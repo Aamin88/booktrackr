@@ -1,5 +1,5 @@
 import axios from "axios";
-// const baseURL = "http://localhost:5002/books/";
+// const baseURL = "http://localhost:5002/books";
 const baseURL = "https://booktrackr-api.vercel.app/books";
 
 // TODO: create another instances of axios of the get book route due

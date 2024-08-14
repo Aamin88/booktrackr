@@ -1,16 +1,13 @@
-const Books =
-  process.env.NODE_ENV === "test"
-    ? require("../models/seedModel.model")
-    : require("../models/book.model");
-
-const bookServices = require("../services/books.services");
+const Books = require("../models/book.model");
+const asyncHandler = require("express-async-handler");
+const Summary = require("../models/summary.model");
 const runGemini = require("../utils/generateText");
 const extraData = require("../utils/extractJSONData");
-
-const asyncHandler = require("express-async-handler");
-
 const gcsUploader = require("../utils/gcsUploader");
+const path = require("path");
+const fs = require("fs").promises;
 
+// use this to resize cover photos later.
 const sharp = require("sharp");
 
 // @Desc  Get all books
@@ -21,7 +18,7 @@ const getAllBooks = asyncHandler(async (req, res) => {
 
   if (!books) {
     res.status(400);
-    throw new Error("Could not fetch all books");
+    throw new Error("Could not fetch books");
   }
 
   res.status(200).json({
@@ -36,103 +33,32 @@ const getAllBooks = asyncHandler(async (req, res) => {
 const getBook = asyncHandler(async (req, res) => {
   const bookId = req.params.id;
 
-  if (!bookId) {
-    res.status(400);
-    throw new Error("no book id");
-  }
-
   const book = await Books.findById(bookId);
 
   if (!book) {
-    res.status(400);
+    res.status(404);
     throw new Error(`book record with id ${bookId} not found`);
   }
 
-  if (book.aiSummary.length !== 0) {
-    res.status(200).json({
-      status: "OK",
-      book: book,
-    });
-    return;
-  }
+  const bookSummary = await Summary.findOne({ book: bookId });
 
-  const summary = await runGemini(book.title, book.author);
-  const data = extraData(summary);
-
-  const updatedRecord = await Books.findByIdAndUpdate(
-    { _id: bookId },
-    { aiSummary: data }
-  );
-
-  if (updatedRecord) {
-    const updatedBook = await Books.findById(bookId);
-    res.status(200).json({
-      status: "OK",
-      book: updatedBook,
-    });
-  } else {
-    res.status(200).json({
-      status: "OK",
-      book: book,
-    });
-  }
+  res.status(200).json({
+    book: book,
+    summary: bookSummary,
+  });
 });
 
 // @Desc  Create a new book record
 // @method  POST /books
 // @Access  Public
 const createBooks = asyncHandler(async (req, res) => {
-  if (process.env.NODE_ENV === "test") {
-    // bookServices.createBook(req, res);
-    const { _id, title, author, dateOfPublication, genre, desc } = req.body;
-    const file = req?.file;
-
-    console.log(file);
-    if (!title || !author) {
-      res.status(400);
-      throw new Error("title, filepath and author field can't be left empty");
-    }
-
-    const coverImg = gcsUploader(file.buffer, file.originalname);
-
-    const existedBook = await Books.findOne({ title });
-
-    if (existedBook) {
-      res.status(403);
-      throw new Error("book record alright exits");
-    }
-
-    const newRecord = await Books.create({
-      _id,
-      title,
-      author,
-      dateOfPublication,
-      genre,
-      coverImg: coverImg,
-      description: desc,
-    });
-
-    if (newRecord) {
-      res.status(201).json({
-        msg: "created",
-        book: newRecord,
-      });
-    } else {
-      res.status(400);
-      throw new Error("unable to create new record");
-    }
-    return;
-  }
-
   const { title, author, dateOfPublication, genre, desc } = req.body;
 
   const imgfile = req?.file;
 
-  console.log(imgfile);
-
   if (!title || !author) {
     res.status(400);
-    throw new Error("title, filepath and author field can't be left empty");
+    throw new Error("title and author field must be filled");
   }
 
   const existedBook = await Books.findOne({ title });
@@ -153,19 +79,44 @@ const createBooks = asyncHandler(async (req, res) => {
   if (imgfile) {
     const coverImg = await gcsUploader(imgfile.buffer, imgfile.originalname);
     newBook = { ...newBook, coverImg };
-  }
-
-  const newRecord = await Books.create(newBook);
-
-  if (newRecord) {
-    res.status(201).json({
-      msg: "created",
-      book: newRecord,
-    });
   } else {
-    res.status(400);
-    throw new Error("unable to create new record");
+    const imagePath = path.join(
+      __dirname,
+      "..",
+      "public",
+      "images",
+      "booktrackr.png"
+    );
+    const fileBuffer = await fs.readFile(imagePath);
+
+    const coverImg = await gcsUploader(fileBuffer, path.basename(imagePath));
+
+    newBook = { ...newBook, coverImg };
   }
+
+  const book = await Books.create(newBook);
+
+  if (!book) {
+    res.status(400);
+    throw new Error("could not create book record");
+  }
+
+  const aiSummary = await runGemini(book.title, book.author);
+
+  const bookSummary = await Summary.create({
+    book: book._id,
+    summary: aiSummary,
+  });
+
+  if (!bookSummary) {
+    res.status(400);
+    throw new Error("could not create a summar yfor the book");
+  }
+
+  res.status(201).json({
+    summary: bookSummary,
+    book: book,
+  });
 });
 
 // @Desc Update a book record

@@ -6,9 +6,7 @@
   "scripts": {
     "start": "node index",
     "dev": "nodemon index",
-    "vercel-build": "echo hello",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
-    "prepare": "husky"
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",

@@ -1,22 +1,7 @@
 import "./App.css";
-
-import instance from "./config/axios";
 import { Card, Pagination } from "./components";
-
 import { useLoaderData } from "react-router-dom";
 import { useState, useMemo } from "react";
-
-export async function loader() {
-  try {
-    const res = await instance.get("/");
-    const books = res.data.books;
-    return books;
-  } catch (error) {
-    return error.message;
-  }
-}
-
-export async function action() {}
 
 function App() {
   const books = useLoaderData();

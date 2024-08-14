@@ -1,30 +1,20 @@
 import "./index.css";
-import React, { lazy, Suspense } from "react";
-import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-import { action as homeAction } from "./routes/index/Index.jsx";
-
-import { ToastContainer } from "react-toastify";
+import App from "./App.jsx";
 import "react-toastify/dist/ReactToastify.css";
 
-// import { Root, Details, Add } from "./routes";
-import { Error } from "./pages/";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
-const Index = lazy(() => import("./routes/index/Index.jsx"));
-const Add = lazy(() => import("./routes/add/Add.jsx"));
-const Root = lazy(() => import("./routes/root.jsx"));
-const BookDetailsPage = lazy(() =>
-  import("./routes/bookDetailPage/BookDetailPage.jsx")
-);
+import Error from "./routes/error/Error.jsx";
+import Home from "./routes/home/Home.jsx";
+import Add from "./routes/add/Add.jsx";
+import Root from "./routes/root.jsx";
+import BookDetailsPage from "./routes/bookDetailPage/BookDetailsPage.jsx";
 
-// loaders and acctions
-import { loader as indexLoader } from "./routes/index/Index.jsx";
-import { loader as detailsLoader } from "./routes/bookDetailPage/BookDetailPage.jsx";
-import { loader as appLoader } from "./App.jsx";
-
-import { loader as addLoader, action as addAction } from "./routes/add/Add.jsx";
-import App from "./App.jsx";
+import { appLoader, mainLoader, addLoader, bookLoader } from "./loaders";
+import { homeAction, addAction } from "./actions";
 
 const root = createBrowserRouter([
   {
@@ -34,9 +24,9 @@ const root = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: indexLoader,
+        loader: mainLoader,
         action: homeAction,
-        element: <Index />,
+        element: <Home />,
       },
       {
         path: "/books",
@@ -52,7 +42,7 @@ const root = createBrowserRouter([
       {
         path: "/:bookId",
         element: <BookDetailsPage />,
-        loader: detailsLoader,
+        loader: bookLoader,
       },
       {},
     ],

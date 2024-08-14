@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 3501;
 const cors = require("cors");
 const db = require("./config/db");
 const root = require("./routes/root");
-const booksRoutes = require("./routes/books.route");
+const booksRoutes = require("./routes/v1/books.route");
 const errorHandler = require("./middleware/errorHandler");
 const corsOptions = require("./config/corsOptions");
 const path = require("path");
@@ -16,7 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/uploads/", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", root);
 
@@ -38,16 +37,14 @@ app.use("*", (req, res) => {
 // error middleware
 app.use(errorHandler);
 
-if (process.env.NODE_ENV !== "test") {
-  db.connect()
-    .then(() => {
-      app.listen(PORT, () => {
-        console.log(`Server is active on PORT: ${PORT}`);
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+db.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is active on PORT: ${PORT}`);
     });
-}
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 module.exports = app;

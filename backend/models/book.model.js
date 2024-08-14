@@ -19,10 +19,6 @@ const booksSchema = mongoose.Schema(
       type: String,
       default: "",
     },
-    aiSummary: {
-      type: Array,
-      default: [],
-    },
     genre: {
       type: String,
     },
