@@ -1,12 +1,15 @@
 import "./add.css";
 
 import { BsFillInfoSquareFill } from "react-icons/bs";
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData, useNavigation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Spinner } from "../../components";
 
 function Add() {
   // books in db
   const { data } = useLoaderData();
+
+  const navigation = useNavigation();
 
   const YEAR_REGEX = /^\d{4}$/;
 
@@ -20,7 +23,10 @@ function Add() {
   useEffect(() => {
     const checkBookInrecord = (title) => {
       return setExistTitle(
-        data?.books.some((book) => book.title.trim() === title.trim())
+        data?.books.some(
+          (book) =>
+            book.title.trim().toLowerCase() === title.trim().toLowerCase()
+        )
       );
     };
     checkBookInrecord(title);
@@ -29,6 +35,10 @@ function Add() {
   useEffect(() => {
     setValidYear(YEAR_REGEX.test(year));
   }, [year]);
+
+  if (navigation.state === "submitting") {
+    return <Spinner />;
+  }
 
   return (
     <div className="add section__margin">

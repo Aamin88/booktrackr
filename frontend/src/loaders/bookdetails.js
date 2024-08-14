@@ -3,37 +3,20 @@ import instance from "../config/axios";
 async function loader({ params }) {
   try {
     const { bookId } = params;
-    const res = await instance.get("/" + bookId);
 
-    const {
-      _id,
-      title,
-      author,
-      dateOfPublication,
-      description,
-      aiSummary,
-      genre,
-      coverImg,
-      createdAt,
-      updatedAt,
-    } = res.data.book;
+    console.log(bookId);
+    const res = await instance.get("/books/" + bookId);
 
-    const aiText = aiSummary[0];
-
-    return {
-      _id,
-      title,
-      author,
-      dateOfPublication,
-      description,
-      aiText,
-      genre,
-      coverImg,
-      createdAt,
-      updatedAt,
-    };
+    if (res.status === 200) {
+      const data = res.data;
+      return {
+        book: data.book,
+        summary: data.summary,
+      };
+    }
   } catch (error) {
     console.log(error);
+    return error;
   }
 }
 

@@ -2,11 +2,13 @@ import instance from "../config/axios";
 
 async function loader() {
   try {
-    const res = await instance.get("/");
+    const res = await instance.get("/books");
 
-    return {
-      data: res?.data,
-    };
+    if (res.status) {
+      return {
+        data: res?.data,
+      };
+    }
   } catch (error) {
     throw Error(error);
   }

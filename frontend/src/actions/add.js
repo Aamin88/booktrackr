@@ -22,7 +22,7 @@ export default async function action({ request }) {
   testData.append("dateOfPublication", bookData?.dateOfPublication);
 
   try {
-    const res = await instance.post("/", testData);
+    const res = await instance.post("/books", testData);
 
     if (res.data) {
       toast.info("book added");

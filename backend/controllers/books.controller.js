@@ -2,7 +2,6 @@ const Books = require("../models/book.model");
 const asyncHandler = require("express-async-handler");
 const Summary = require("../models/summary.model");
 const runGemini = require("../utils/generateText");
-const extraData = require("../utils/extractJSONData");
 const gcsUploader = require("../utils/gcsUploader");
 const path = require("path");
 const fs = require("fs").promises;
@@ -41,6 +40,11 @@ const getBook = asyncHandler(async (req, res) => {
   }
 
   const bookSummary = await Summary.findOne({ book: bookId });
+
+  if (!bookSummary) {
+    res.status(404);
+    throw new Error(`summary with id ${bookId} not found`);
+  }
 
   res.status(200).json({
     book: book,
@@ -108,9 +112,11 @@ const createBooks = asyncHandler(async (req, res) => {
     summary: aiSummary,
   });
 
-  if (!bookSummary) {
-    res.status(400);
-    throw new Error("could not create a summar yfor the book");
+  if (bookSummary.summary.length === 0) {
+    await Books.findByIdAndDelete(book._id);
+    await Summary.findByIdAndDelete(bookSummary._id);
+    res.status(406);
+    throw new Error("could not create a summar for the book");
   }
 
   res.status(201).json({

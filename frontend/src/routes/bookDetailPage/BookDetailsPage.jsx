@@ -5,31 +5,11 @@ import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 
 const BookDetailPage = () => {
-  const {
-    _id,
-    title,
-    author,
-    dateOfPublication,
-    description,
-    aiText,
-    genre,
-    coverImg,
-    createdAt,
-    updatedAt,
-  } = useLoaderData();
+  const { book, summary } = useLoaderData();
 
-  console.log(
-    _id,
-    title,
-    author,
-    dateOfPublication,
-    description,
-    aiText,
-    genre,
-    coverImg,
-    createdAt,
-    updatedAt
-  );
+  console.log(summary.summary);
+
+  const bookSummary = summary.summary[0];
 
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -40,16 +20,16 @@ const BookDetailPage = () => {
   return (
     <div className="book__details section__padding">
       <div className="book__details-cover">
-        <img src={coverImg || cover} alt={title} />
+        <img src={book.coverImg || cover} alt={book.title} />
       </div>
       <div className="book__details-content">
-        <h1 className="book__details-title section__heading">{title}</h1>
-        <p className="book__details-author leading__text">by {author}</p>
-        <p className="book__details-summary ">{aiText.overall_summary}</p>
+        <h1 className="book__details-title section__heading">{book.title}</h1>
+        <p className="book__details-author leading__text">by {book.author}</p>
+        <p className="book__details-summary ">{bookSummary.overall_summary}</p>
         <div className="book__details-chapters">
           <h2>Chapters</h2>
 
-          {aiText.chapters.map((chapter, idx) => {
+          {bookSummary.chapters.map((chapter, idx) => {
             return (
               <div
                 key={idx}
@@ -59,7 +39,7 @@ const BookDetailPage = () => {
                 onClick={() => handleAccordionClick(idx)}
               >
                 <div className="book__details-chapter_title">
-                  <h3>{chapter.title}</h3>
+                  <h3>{chapter.chapter_title}</h3>
                   <span>
                     {activeIndex === idx ? <FaMinusSquare /> : <FaPlusSquare />}
                   </span>
