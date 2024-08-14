@@ -4,11 +4,12 @@ import instance from "../config/axios";
 async function loader() {
   try {
     const res = await instance.get("/books");
+    console.log("ss");
     const data = res.data;
 
     // recommendations => selects three books randomly
-    const getBookRecommendation = (books, numberOfRecommendations) => {
-      const shuffled = books.sort(() => 0.5 - Math.random());
+    const getBookRecommendation = (data, numberOfRecommendations) => {
+      const shuffled = data.sort(() => 0.5 - Math.random());
       return shuffled.slice(0, numberOfRecommendations);
     };
     const books = getBookRecommendation(data?.books, 4);
@@ -24,7 +25,7 @@ async function loader() {
       alert("hi");
       return null;
     } else {
-      console.log(error);
+      console.log(error, ">>>>");
       return null;
     }
   }

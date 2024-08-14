@@ -30,6 +30,12 @@ export default async function action({ request }) {
 
     return redirect(`/${res.data.book._id}`);
   } catch (error) {
-    return toast.error(error.message);
+    if (error.response.status === 406) {
+      return toast.error("Could not generate book summary");
+    } else if (error.response.status === 400) {
+      return toast.error("");
+    } else {
+      return toast.error("network error");
+    }
   }
 }

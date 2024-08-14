@@ -113,8 +113,8 @@ const createBooks = asyncHandler(async (req, res) => {
   });
 
   if (bookSummary.summary.length === 0) {
-    await Books.findByIdAndDelete(book._id);
     await Summary.findByIdAndDelete(bookSummary._id);
+    await Books.findByIdAndDelete(book._id);
     res.status(406);
     throw new Error("could not create a summar for the book");
   }

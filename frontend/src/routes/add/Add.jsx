@@ -3,7 +3,7 @@ import "./add.css";
 import { BsFillInfoSquareFill } from "react-icons/bs";
 import { Form, useLoaderData, useNavigation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Spinner } from "../../components";
+import { SpinnerAi } from "../../components";
 
 function Add() {
   // books in db
@@ -37,7 +37,7 @@ function Add() {
   }, [year]);
 
   if (navigation.state === "submitting") {
-    return <Spinner />;
+    return <SpinnerAi />;
   }
 
   return (
