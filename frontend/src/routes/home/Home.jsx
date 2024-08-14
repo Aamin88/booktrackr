@@ -10,7 +10,6 @@ import cover from "../../assets/header-cover.png";
 function Home() {
   const { books } = useLoaderData();
 
-  console.log(books);
   const navigate = useNavigate();
 
   if (navigate.state == "loading" || navigate.state === "pending") {

@@ -15,15 +15,17 @@ async function loader() {
 
     return { books };
   } catch (error) {
-    const statusCode = error.response.status;
+    const statusCode = error?.response?.status;
     if (statusCode === 400) {
-      console.log("console.log");
+      alert("console.log");
       toast.error("hi");
       return null;
     } else if (statusCode === 404) {
-      console.log("hi");
+      alert("hi");
+      return null;
     } else {
-      console.log("ho");
+      console.log(error);
+      return null;
     }
   }
 }
