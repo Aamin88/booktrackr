@@ -9,7 +9,10 @@ const runGemini = async (bookTitle, bookAuthor) => {
   const result = await geminiModel.generateContent(prompt);
   const response = result.response;
   const text = response.text();
-  return extractJSONData(text);
+
+  const cleanedText = extractJSONData(text);
+
+  return cleanedText;
 };
 
 module.exports = runGemini;

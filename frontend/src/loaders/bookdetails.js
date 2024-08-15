@@ -7,7 +7,9 @@ async function loader({ params }) {
     console.log(bookId);
     const res = await instance.get("/books/" + bookId);
 
-    if (res.status === 200) {
+    console.log(res);
+
+    if (res?.status === 200) {
       const data = res.data;
       return {
         book: data.book,
