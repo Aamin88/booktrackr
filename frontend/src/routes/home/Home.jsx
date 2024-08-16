@@ -30,7 +30,7 @@ function Home() {
             <div className="header__container-header_illustration-text">
               <h1 className="page__heading">Welcome to Booktrackr</h1>
               <p>
-                At Booktrackr, we believe in the magic of sharing stories. Our
+                At Booktrackr, we believe in the magic of sharing stories. The
                 platform is designed for book lovers like you to keep track of
                 your reading adventures and share your favorite books with
                 others. Whether you&apos;ve just finished an unforgettable novel
@@ -59,12 +59,6 @@ function Home() {
             </div>
           </div>
 
-          {/* 
-          some in collection 
-          - render section based on the books in store
-           - if no books dont render
-           - should be random
-          */}
           <div className="home__container-content_books section__margin">
             <h3 className="section__heading">Some books in the collections</h3>
             <div className="home__container-content_books-content">
@@ -83,10 +77,11 @@ function Home() {
             <h3 className="section__heading">Join Our Reading Community</h3>
             <div className="home__container-content_community-info">
               <p className="section__text">
-                Book Haven is more than just a tracking tool—it&apos;s a vibrant
+                Booktrackr is more than just a tracking tool—it&apos;s a vibrant
                 community of readers who love to share and discover new books.
-                Connect with others, exchange recommendations, and dive into
-                discussions about your favorite reads.
+                Connect with others through a books title, exchange
+                recommendations, and dive into discussions about your favorite
+                reads.
               </p>
             </div>
           </div>
@@ -95,9 +90,9 @@ function Home() {
             <h3 className="section__heading">Start Sharing Today</h3>
             <div className="home__container-content_share-info">
               <p className="section__text">
-                Ready to make your mark in the reading world? Sign up now and
-                start adding books to your personal library. Your next favorite
-                read—and a community of fellow book enthusiasts—awaits.
+                Ready to make your mark in the reading world? Start adding books
+                to the library. Your next favorite read—and a community of
+                fellow book enthusiasts—awaits.
               </p>
             </div>
           </div>
@@ -106,11 +101,12 @@ function Home() {
             <h3 className="section__heading">About us</h3>
             <div className="home__container-content_aboutus-info">
               <p className="section__text">
-                Created by a team of passionate readers, Book Haven is dedicated
-                to fostering a love of reading and the joy of sharing stories.
-                We believe that every book recommendation has the potential to
-                spark a new adventure, and we&apos;re excited to see what
-                you&apos;ll share.
+                Created by a team of passionate readers, Booktrackrs is
+                dedicated to fostering a love of reading and the joy of sharing
+                stories. We believe that every book recommendation has the
+                potential to spark a new adventure, and we&apos;re excited to
+                see what you&apos;ll share.
+                
               </p>
             </div>
           </div>

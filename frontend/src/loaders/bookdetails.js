@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import instance from "../config/axios";
 
 async function loader({ params }) {
@@ -17,8 +18,11 @@ async function loader({ params }) {
       };
     }
   } catch (error) {
-    console.log(error);
-    return error;
+    if (error.response.status === 404) {
+      return toast.error("book not found");
+    } else {
+      return toast.error("network error");
+    }
   }
 }
 

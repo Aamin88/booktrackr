@@ -45,6 +45,7 @@ const getBook = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error(`summary with id ${bookId} not found`);
   }
+  console.log(bookSummary);
 
   res.status(200).json({
     book: book,
