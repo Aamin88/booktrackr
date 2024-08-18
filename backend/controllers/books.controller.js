@@ -113,7 +113,7 @@ const createBooks = asyncHandler(async (req, res) => {
     summary: aiSummary,
   });
 
-  if (aiSummary.length === 0 && bookSummary.summary.length === 0) {
+  if (!aiSummary && bookSummary.summary.length === 0) {
     await Summary.findByIdAndDelete(bookSummary._id);
     await Books.findByIdAndDelete(book._id);
     res.status(406);

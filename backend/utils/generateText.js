@@ -12,9 +12,11 @@ const runGemini = async (bookTitle, bookAuthor) => {
 
   const cleanedText = extractJSONData(text);
 
+  console.log(cleanedText);
+
   return cleanedText;
 };
 
-runGemini("the confidence gap", "russ haris");
+// runGemini("the confidence gap", "russ haris");
 
 module.exports = runGemini;
