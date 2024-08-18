@@ -15,4 +15,6 @@ const runGemini = async (bookTitle, bookAuthor) => {
   return cleanedText;
 };
 
+runGemini("the confidence gap", "russ haris");
+
 module.exports = runGemini;
