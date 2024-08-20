@@ -106,7 +106,6 @@ function Home() {
                 stories. We believe that every book recommendation has the
                 potential to spark a new adventure, and we&apos;re excited to
                 see what you&apos;ll share.
-                
               </p>
             </div>
           </div>

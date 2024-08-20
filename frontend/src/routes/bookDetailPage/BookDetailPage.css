@@ -44,7 +44,8 @@
   margin-bottom: 15px;
 }
 
-.book__details-chapter {
+.book__details-chapter,
+.book__details-audience {
   margin-bottom: 10px;
   border-bottom: 1px solid #ddd;
   cursor: pointer;
@@ -54,7 +55,13 @@
   transition: all 0.3s ease;
 }
 
-.book__details-chapter_title {
+.book__details-audience {
+  background-color: #ddd;
+  padding: 0.5em 1em;
+}
+
+.book__details-chapter_title,
+.book__details-audience_title {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,7 +73,9 @@
 }
 
 .book__details-chapter_title:hover,
-.book__details-chapter.active .book__details-chapter_title {
+.book__details-chapter.active .book__details-chapter_title,
+.book__details-audience_title:hover,
+.book__details-audience.active .book__details-audience_title {
   color: #007bff;
 }
 
@@ -95,11 +104,27 @@
   margin-bottom: 0.5em;
 }
 
+.book__details-chapter.active,
+.book__details-audience.active {
+  border: #007bff 2px solid;
+}
+
 .book__details-chapter.active
   .book__details-chapter.active
   .book__details-chapter_title
   span {
   transform: rotate(180deg);
+}
+
+.book__details-audience.active
+  .book__details-audience.active
+  .book__details-chapter_title
+  span {
+  transform: rotate(180deg);
+}
+
+.lesson li {
+  margin-bottom: 0.5em;
 }
 
 /* mobile view */

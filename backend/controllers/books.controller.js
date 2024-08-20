@@ -93,9 +93,7 @@ const createBooks = asyncHandler(async (req, res) => {
       "booktrackr.png"
     );
     const fileBuffer = await fs.readFile(imagePath);
-
     const coverImg = await gcsUploader(fileBuffer, path.basename(imagePath));
-
     newBook = { ...newBook, coverImg };
   }
 

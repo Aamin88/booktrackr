@@ -12,9 +12,13 @@ const BookDetailPage = () => {
   const bookSummary = summary.summary[0];
 
   const [activeIndex, setActiveIndex] = useState(null);
+  const [audienceToogle, setAudienceToggle] = useState(false);
 
   const handleAccordionClick = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
+  };
+  const toogleAudience = () => {
+    setAudienceToggle(!audienceToogle);
   };
 
   return (
@@ -26,10 +30,24 @@ const BookDetailPage = () => {
         <h1 className="book__details-title section__heading">{book.title}</h1>
         <p className="book__details-author leading__text">by {book.author}</p>
         <p className="book__details-summary ">{bookSummary.overall_summary}</p>
+        {/*  */}
+        <div
+          className={`book__details-audience ${audienceToogle ? "active" : ""}`}
+          onClick={() => toogleAudience()}
+        >
+          <div className="book__details-audience_title">
+            <h3>Audience</h3>
+            <span>{audienceToogle ? <FaMinusSquare /> : <FaPlusSquare />}</span>
+          </div>
+          <p className="book__details-summary ">
+            {audienceToogle && bookSummary.target_audience}
+          </p>
+        </div>
+        {/*  */}
         <div className="book__details-chapters">
           <h2>Chapters</h2>
 
-          {bookSummary.chapters.map((chapter, idx) => {
+          {bookSummary.chapter_summary.map((chapter, idx) => {
             return (
               <div
                 key={idx}
@@ -39,12 +57,45 @@ const BookDetailPage = () => {
                 onClick={() => handleAccordionClick(idx)}
               >
                 <div className="book__details-chapter_title">
-                  <h3>{chapter.chapter_title}</h3>
+                  <h3>{chapter.chapter}</h3>
                   <span>
                     {activeIndex === idx ? <FaMinusSquare /> : <FaPlusSquare />}
                   </span>
                 </div>
                 {activeIndex === idx && (
+                  <ul className="book__details-chapter_content ">
+                    <p className="book__details-chapter_explain section__text">
+                      {chapter.description}
+                    </p>
+                    <div className="book__details-chapter_content-points">
+                      <h5>Key Lessons</h5>
+                      {bookSummary.length !== 0 &&
+                        bookSummary?.key_lessons.key_takeaways.map(
+                          (lesson, id) => {
+                            return (
+                              <div key={id} className="lesson">
+                                <li>{lesson.concept}</li>
+                                <p>{lesson.description}</p>
+                              </div>
+                            );
+                          }
+                        )}
+                    </div>
+                  </ul>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BookDetailPage;
+
+{
+  /* {activeIndex === idx && (
                   <ul className="book__details-chapter_content ">
                     <p className="book__details-chapter_explain section__text">
                       {chapter.contextual_explanation}
@@ -62,14 +113,5 @@ const BookDetailPage = () => {
                       ))}
                     </div>
                   </ul>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default BookDetailPage;
+                )} */
+}
