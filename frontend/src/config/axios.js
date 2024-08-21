@@ -11,6 +11,7 @@ const instance = axios.create({
   timeout: 1000 * 60 * 10,
   headers: {
     "Content-type": "multipart/form-data",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 
