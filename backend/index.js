@@ -6,12 +6,11 @@ const db = require("./config/db");
 const root = require("./routes/root");
 const booksRoutes = require("./routes/v1/books.route");
 const errorHandler = require("./middleware/errorHandler");
-const corsOptions = require("./config/corsOptions");
 const path = require("path");
 
 const app = express();
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
