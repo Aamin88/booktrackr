@@ -2,7 +2,7 @@ import "./BookDetailPage.css";
 import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import cover from "../../assets/cover.jpg";
 import { useLoaderData } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const BookDetailPage = () => {
   const { book, summary } = useLoaderData();
@@ -51,6 +51,7 @@ const BookDetailPage = () => {
             return (
               <div
                 key={idx}
+                id={`test-${idx}`}
                 className={`book__details-chapter ${
                   activeIndex === idx ? "active" : ""
                 }`}

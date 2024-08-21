@@ -47,4 +47,5 @@ const runGemini = async (bookTitle, bookAuthor) => {
 };
 
 // runGemini("The confidence gap", "Russ Haris");
+// runGemini("The Great Gatsby", "F. Scott Fitzgerald");
 module.exports = runGemini;

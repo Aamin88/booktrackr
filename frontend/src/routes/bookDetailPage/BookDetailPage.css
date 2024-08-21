@@ -123,8 +123,12 @@
   transform: rotate(180deg);
 }
 
-.lesson li {
+.lesson {
   margin-bottom: 0.5em;
+}
+
+.lesson p {
+  font-weight: 200;
 }
 
 /* mobile view */

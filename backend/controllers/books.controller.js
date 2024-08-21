@@ -42,7 +42,9 @@ const getBook = asyncHandler(async (req, res) => {
   const bookSummary = await Summary.findOne({ book: bookId });
 
   if (!bookSummary) {
+    await Books.findByIdAndDelete(bookId);
     res.status(404);
+    // res.redirect("/books");
     throw new Error(`summary with id ${bookId} not found`);
   }
   console.log(bookSummary);
