@@ -21,8 +21,8 @@ async function loader({ params }) {
       toast.error("book not found");
       return redirect("/not-found");
     } else {
-      redirect("/books");
-      return toast.error("network error");
+      toast.error("network error");
+      return redirect("/books");
     }
   }
 }
