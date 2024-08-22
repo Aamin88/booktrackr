@@ -6,7 +6,7 @@ const runGemini = async (bookTitle, bookAuthor) => {
 
   const prompt2 = `who are the target_audience of this book "${bookTitle}" authored by "${bookAuthor}". In one paragraph. If the book does not exist. Return this value as response 'book does not exist.'`;
 
-  const prompt3 = `Extract the key takeaways from the book titled '${bookTitle}' authored by '${bookAuthor}'. The response should be formatted as a JSON object with key-value pairs under the following fields:
+  const prompt3 = `Extract the key takeaways from each chapter of the book titled '${bookTitle}' authored by '${bookAuthor}'. The response should be formatted as a JSON object with key-value pairs under the following fields:
   'concept': The takeaway in brief.
   'description': A detailed explanation of the takeaway.
   The result should be in this format:  
@@ -21,7 +21,19 @@ const runGemini = async (bookTitle, bookAuthor) => {
   If the book does not exist, return an empty array.
   `;
 
-  const prompt4 = `List all the chapter of the book ${bookTitle} by ${bookAuthor}. Put your response in an array. Also given a short description of what the chapter is about. 
+  const prompt4 = `List all the chapter of the book ${bookTitle} by ${bookAuthor}. Put your response in an array. Also give a short description of what the chapter is about. 
+  The result should be in this format: 
+  [
+      {
+        "chapter_name": "title of chapter",
+        "chapter_summary": "short description of the chapter"
+      },
+      {
+        "chapter_name": "title of chapter",
+        "chapter_summary": "short description of the chapter"
+      }
+  
+  ]
   Ensure that the JSON output is properly formatted, with all spaces and single quotes replaced with double quotes. All commas and curly brackets should be appropriately placed to prevent parsing issues. Additionally, any quotation within the text generated should be enclosed in single quotations (' ') rather than double quotations. The output should be syntactically correct and ready for immediate use without any JSON errors.
   If the book does not exist, return an empty array in this format. chapter_summary: [].
   `;
@@ -69,6 +81,8 @@ const runGemini = async (bookTitle, bookAuthor) => {
 
     return responses;
   } catch (error) {
+
+    
     console.log(error);
   }
 };

@@ -13,12 +13,18 @@ const BookDetailPage = () => {
 
   const [activeIndex, setActiveIndex] = useState(null);
   const [audienceToogle, setAudienceToggle] = useState(false);
+  const [lessonsToogle, setLessonsToggle] = useState(false);
 
   const handleAccordionClick = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
+
   const toogleAudience = () => {
     setAudienceToggle(!audienceToogle);
+  };
+
+  const toogleLessons = () => {
+    setLessonsToggle(!lessonsToogle);
   };
 
   return (
@@ -44,6 +50,31 @@ const BookDetailPage = () => {
           </p>
         </div>
         {/*  */}
+        {/* key lessons*/}
+        <div
+          className={`book__details-lessons ${lessonsToogle ? "active" : ""}`}
+          onClick={() => toogleLessons()}
+        >
+          <div className="book__details-lessons_title">
+            <h3>Key takeaways</h3>
+            <span>{audienceToogle ? <FaMinusSquare /> : <FaPlusSquare />}</span>
+          </div>
+          <p className="book__details-lessons_content ">
+            {lessonsToogle && (
+              <div className="book__details-chapter_content-points">
+                {bookSummary?.key_lessons.key_lessons.map((lesson, id) => {
+                  return (
+                    <div key={id} className="lesson">
+                      <li>{lesson.concept}</li>
+                      <p>{lesson.description}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </p>
+        </div>
+        {/*  */}
         <div className="book__details-chapters">
           <h2>Chapters</h2>
 
@@ -58,7 +89,7 @@ const BookDetailPage = () => {
                   onClick={() => handleAccordionClick(idx)}
                 >
                   <div className="book__details-chapter_title">
-                    <h3>{chapter.chapter}</h3>
+                    <h3>{chapter.chapter_name}</h3>
                     <span>
                       {activeIndex === idx ? (
                         <FaMinusSquare />
@@ -70,22 +101,8 @@ const BookDetailPage = () => {
                   {activeIndex === idx && (
                     <ul className="book__details-chapter_content ">
                       <p className="book__details-chapter_explain section__text">
-                        {chapter.description}
+                        {chapter?.chapter_summary}
                       </p>
-                      <div className="book__details-chapter_content-points">
-                        <h5>Key Lessons</h5>
-                        {bookSummary.length !== 0 &&
-                          bookSummary?.key_lessons.key_lessons.map(
-                            (lesson, id) => {
-                              return (
-                                <div key={id} className="lesson">
-                                  <li>{lesson.concept}</li>
-                                  <p>{lesson.description}</p>
-                                </div>
-                              );
-                            }
-                          )}
-                      </div>
                     </ul>
                   )}
                 </div>
@@ -119,4 +136,21 @@ export default BookDetailPage;
                     </div>
                   </ul>
                 )} */
+}
+
+{
+  /* <div className="book__details-chapter_content-points">
+<h5>Key Lessons</h5>
+{bookSummary.length !== 0 &&
+  bookSummary?.key_lessons.key_lessons.map(
+    (lesson, id) => {
+      return (
+        <div key={id} className="lesson">
+          <li>{lesson.concept}</li>
+          <p>{lesson.description}</p>
+        </div>
+      );
+    }
+  )}
+</div> */
 }

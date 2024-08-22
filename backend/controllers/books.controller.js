@@ -120,20 +120,18 @@ const createBooks = asyncHandler(async (req, res) => {
 
   const aiSummary = await runGemini(book.title, book.author);
 
+  if (aiSummary.overall_summary === "book does not exist.") {
+    await Books.findByIdAndDelete(book._id);
+    console.log("testing one two three");
+
+    res.status(406);
+    throw new Error("could not create a summary for the book");
+  }
+
   const bookSummary = await Summary.create({
     book: book._id,
     summary: aiSummary,
   });
-
-  console.log(bookSummary);
-
-  if (aiSummary && !bookSummary) {
-    console.log("ereds");
-    await Summary.findByIdAndDelete(bookSummary._id);
-    await Books.findByIdAndDelete(book._id);
-    res.status(406);
-    throw new Error("could not create a summary for the book");
-  }
 
   res.status(201).json({
     summary: bookSummary,

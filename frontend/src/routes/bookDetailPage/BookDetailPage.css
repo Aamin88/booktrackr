@@ -45,7 +45,8 @@
 }
 
 .book__details-chapter,
-.book__details-audience {
+.book__details-audience,
+.book__details-lessons {
   margin-bottom: 10px;
   border-bottom: 1px solid #ddd;
   cursor: pointer;
@@ -55,13 +56,15 @@
   transition: all 0.3s ease;
 }
 
-.book__details-audience {
+.book__details-audience,
+.book__details-lessons {
   background-color: #ddd;
   padding: 0.5em 1em;
 }
 
 .book__details-chapter_title,
-.book__details-audience_title {
+.book__details-audience_title,
+.book__details-lessons_title {
   display: flex;
   justify-content: space-between;
   align-items: center;
