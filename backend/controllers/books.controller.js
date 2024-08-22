@@ -15,15 +15,20 @@ const sharp = require("sharp");
 const getAllBooks = asyncHandler(async (req, res) => {
   const books = await Books.find({});
 
-  if (!books) {
-    res.status(400);
-    throw new Error("Could not fetch books");
-  }
+  try {
+    if (!books) {
+      res.status(400);
+      throw new Error("Could not fetch books");
+    }
 
-  res.status(200).json({
-    status: "OK",
-    books: books,
-  });
+    res.status(200).json({
+      status: "OK",
+      books: books,
+    });
+  } catch (error) {
+    res.status(400);
+    throw new Error("could not fetch books");
+  }
 });
 
 // @Desc  Get a books
@@ -32,27 +37,34 @@ const getAllBooks = asyncHandler(async (req, res) => {
 const getBook = asyncHandler(async (req, res) => {
   const bookId = req.params.id;
 
-  const book = await Books.findById(bookId);
+  try {
+    const book = await Books.findById(bookId);
 
-  if (!book) {
-    res.status(404);
-    throw new Error(`book record with id ${bookId} not found`);
+    if (!book) {
+      res.status(404);
+      throw new Error(`book record with id ${bookId} not found`);
+    }
+
+    const bookSummary = await Summary.findOne({ book: bookId });
+
+    if (!bookSummary) {
+      await Books.findByIdAndDelete(bookId);
+      res.status(404);
+      throw new Error(`summary with id ${bookId} not found`);
+    }
+
+    res.status(200).json({
+      book: book,
+      summary: bookSummary,
+    });
+  } catch (error) {
+    if (error.kind === "ObjectId") {
+      res.status(404);
+      throw new Error("id not error");
+    }
+    res.status(400);
+    throw new Error("Book not found");
   }
-
-  const bookSummary = await Summary.findOne({ book: bookId });
-
-  if (!bookSummary) {
-    await Books.findByIdAndDelete(bookId);
-    res.status(404);
-    // res.redirect("/books");
-    throw new Error(`summary with id ${bookId} not found`);
-  }
-  console.log(bookSummary);
-
-  res.status(200).json({
-    book: book,
-    summary: bookSummary,
-  });
 });
 
 // @Desc  Create a new book record
@@ -113,11 +125,14 @@ const createBooks = asyncHandler(async (req, res) => {
     summary: aiSummary,
   });
 
-  if (!aiSummary && bookSummary.summary.length === 0) {
+  console.log(bookSummary);
+
+  if (aiSummary && !bookSummary) {
+    console.log("ereds");
     await Summary.findByIdAndDelete(bookSummary._id);
     await Books.findByIdAndDelete(book._id);
     res.status(406);
-    throw new Error("could not create a summar for the book");
+    throw new Error("could not create a summary for the book");
   }
 
   res.status(201).json({

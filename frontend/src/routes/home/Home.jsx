@@ -53,9 +53,8 @@ function Home() {
           <div className="home__container-content_howitworks section__margin">
             <h3 className="section__heading">How it works</h3>
             <div className="home__container-content_howitworks-items ">
-              {data?.map((info, idx) => (
-                <Feature key={idx} data={info} />
-              ))}
+              {data.length !== 0 &&
+                data?.map((info, idx) => <Feature key={idx} data={info} />)}
             </div>
           </div>
 

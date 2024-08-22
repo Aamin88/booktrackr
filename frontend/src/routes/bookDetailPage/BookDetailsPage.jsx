@@ -2,14 +2,14 @@ import "./BookDetailPage.css";
 import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import cover from "../../assets/cover.jpg";
 import { useLoaderData } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const BookDetailPage = () => {
   const { book, summary } = useLoaderData();
 
-  console.log(summary.summary);
+  const bookSummary = summary?.summary[0];
 
-  const bookSummary = summary.summary[0];
+  console.log(book);
 
   const [activeIndex, setActiveIndex] = useState(null);
   const [audienceToogle, setAudienceToggle] = useState(false);
@@ -24,12 +24,12 @@ const BookDetailPage = () => {
   return (
     <div className="book__details section__padding">
       <div className="book__details-cover">
-        <img src={book.coverImg || cover} alt={book.title} />
+        <img src={book?.coverImg || cover} alt={book?.title} />
       </div>
       <div className="book__details-content">
-        <h1 className="book__details-title section__heading">{book.title}</h1>
-        <p className="book__details-author leading__text">by {book.author}</p>
-        <p className="book__details-summary ">{bookSummary.overall_summary}</p>
+        <h1 className="book__details-title section__heading">{book?.title}</h1>
+        <p className="book__details-author leading__text">by {book?.author}</p>
+        <p className="book__details-summary ">{bookSummary?.overall_summary}</p>
         {/*  */}
         <div
           className={`book__details-audience ${audienceToogle ? "active" : ""}`}
@@ -40,53 +40,57 @@ const BookDetailPage = () => {
             <span>{audienceToogle ? <FaMinusSquare /> : <FaPlusSquare />}</span>
           </div>
           <p className="book__details-summary ">
-            {audienceToogle && bookSummary.target_audience}
+            {audienceToogle && bookSummary?.target_audience}
           </p>
         </div>
         {/*  */}
         <div className="book__details-chapters">
           <h2>Chapters</h2>
 
-          {bookSummary.chapter_summary.map((chapter, idx) => {
-            return (
-              <div
-                key={idx}
-                id={`test-${idx}`}
-                className={`book__details-chapter ${
-                  activeIndex === idx ? "active" : ""
-                }`}
-                onClick={() => handleAccordionClick(idx)}
-              >
-                <div className="book__details-chapter_title">
-                  <h3>{chapter.chapter}</h3>
-                  <span>
-                    {activeIndex === idx ? <FaMinusSquare /> : <FaPlusSquare />}
-                  </span>
+          {bookSummary?.chapter_summary.length !== 0 &&
+            bookSummary?.chapter_summary.map((chapter, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className={`book__details-chapter ${
+                    activeIndex === idx ? "active" : ""
+                  }`}
+                  onClick={() => handleAccordionClick(idx)}
+                >
+                  <div className="book__details-chapter_title">
+                    <h3>{chapter.chapter}</h3>
+                    <span>
+                      {activeIndex === idx ? (
+                        <FaMinusSquare />
+                      ) : (
+                        <FaPlusSquare />
+                      )}
+                    </span>
+                  </div>
+                  {activeIndex === idx && (
+                    <ul className="book__details-chapter_content ">
+                      <p className="book__details-chapter_explain section__text">
+                        {chapter.description}
+                      </p>
+                      <div className="book__details-chapter_content-points">
+                        <h5>Key Lessons</h5>
+                        {bookSummary.length !== 0 &&
+                          bookSummary?.key_lessons.key_lessons.map(
+                            (lesson, id) => {
+                              return (
+                                <div key={id} className="lesson">
+                                  <li>{lesson.concept}</li>
+                                  <p>{lesson.description}</p>
+                                </div>
+                              );
+                            }
+                          )}
+                      </div>
+                    </ul>
+                  )}
                 </div>
-                {activeIndex === idx && (
-                  <ul className="book__details-chapter_content ">
-                    <p className="book__details-chapter_explain section__text">
-                      {chapter.description}
-                    </p>
-                    <div className="book__details-chapter_content-points">
-                      <h5>Key Lessons</h5>
-                      {bookSummary.length !== 0 &&
-                        bookSummary?.key_lessons.key_takeaways.map(
-                          (lesson, id) => {
-                            return (
-                              <div key={id} className="lesson">
-                                <li>{lesson.concept}</li>
-                                <p>{lesson.description}</p>
-                              </div>
-                            );
-                          }
-                        )}
-                    </div>
-                  </ul>
-                )}
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     </div>

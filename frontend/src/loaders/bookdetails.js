@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import instance from "../config/axios";
+import { redirect } from "react-router-dom";
 
 async function loader({ params }) {
   try {
@@ -7,8 +8,6 @@ async function loader({ params }) {
 
     console.log(bookId);
     const res = await instance.get("/books/" + bookId);
-
-    console.log(res);
 
     if (res?.status === 200) {
       const data = res.data;
@@ -19,8 +18,10 @@ async function loader({ params }) {
     }
   } catch (error) {
     if (error.response.status === 404) {
-      return toast.error("book not found");
+      toast.error("book not found");
+      return redirect("/not-found");
     } else {
+      redirect("/books");
       return toast.error("network error");
     }
   }

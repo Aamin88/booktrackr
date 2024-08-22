@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import Error from "./routes/error/Error.jsx";
+import Notfound from "./routes/error/Notfound.jsx";
 import Home from "./routes/home/Home.jsx";
 import Add from "./routes/add/Add.jsx";
 import Root from "./routes/root.jsx";
@@ -44,7 +45,10 @@ const root = createBrowserRouter([
         element: <BookDetailsPage />,
         loader: bookLoader,
       },
-      {},
+      {
+        path: "/not-found",
+        element: <Notfound />,
+      },
     ],
   },
 ]);
