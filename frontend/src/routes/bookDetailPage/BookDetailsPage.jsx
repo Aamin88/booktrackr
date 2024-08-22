@@ -11,13 +11,13 @@ const BookDetailPage = () => {
 
   console.log(book);
 
-  const [activeIndex, setActiveIndex] = useState(null);
+  // const [activeIndex, setActiveIndex] = useState(null);
   const [audienceToogle, setAudienceToggle] = useState(false);
   const [lessonsToogle, setLessonsToggle] = useState(false);
 
-  const handleAccordionClick = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
+  // const handleAccordionClick = (index) => {
+  //   setActiveIndex(activeIndex === index ? null : index);
+  // };
 
   const toogleAudience = () => {
     setAudienceToggle(!audienceToogle);
@@ -75,7 +75,7 @@ const BookDetailPage = () => {
           </p>
         </div>
         {/*  */}
-        <div className="book__details-chapters">
+        {/* <div className="book__details-chapters">
           <h2>Chapters</h2>
 
           {bookSummary?.chapter_summary.length !== 0 &&
@@ -108,7 +108,7 @@ const BookDetailPage = () => {
                 </div>
               );
             })}
-        </div>
+        </div> */}
       </div>
     </div>
   );
